@@ -1,7 +1,6 @@
 
 Template.quill.onRendered(function() {
   var tmpl = this;
-  var fullEditor;
   // var authorId = Meteor.user().username;
 
   tmpl.quillEditor = new Quill('#editor', {
@@ -32,41 +31,31 @@ Template.quill.onRendered(function() {
   tmpl.quillEditor.oldDelta = tmpl.quillEditor.getContents();
 
   Tracker.autorun(function() {
-    if(!tmpl.data.docId) {
-      return
-    }
-    var editor = Quill.editors[Quill.editors.length - 1];
-    var dataReady = false;
-    var doc = window[tmpl.data.collection].findOne({_id:tmpl.data.docId});
-
-    if(_.isEmpty(doc)) {
-      return
-    }
+    var editor = tmpl.quillEditor;
+    var doc = tmpl.data.collection.findOne({_id:tmpl.data.docId});
 
     if(!doc[tmpl.data.field]) {
       var blankObj = {}
       blankObj[tmpl.data.field] = "";
-      window[tmpl.data.collection].update({_id: tmpl.data.docId}, {$set: blankObj})
+      tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: blankObj})
     }
-    var remoteContents = doc[fieldDelta]
-    if(remoteContents) {
-      var editorContents = editor.getContents();
-      var diff = editorContents.diff(remoteContents);
+    var remoteContents = doc[fieldDelta];
+    var remoteHTML = doc[tmpl.data.field];
 
-      // editor.oldData is a new field created to store the last server update
-      var oldContents = editor.oldDelta;
-      var localChanges = oldContents.diff(editorContents);
-      var remoteChanges = oldContents.diff(remoteContents);
+    var editorContents = editor.getContents();
+    var diff = editorContents.diff(remoteContents);
 
-      if(diff.ops.length > 0) {
-        // No "diff" means that this user made the last save, and there's nothing to update
+    // editor.oldData is a new field created to store the last server update
+    var oldContents = editor.oldDelta
+    var localChanges = oldContents.diff(editorContents);
+    var remoteChanges = oldContents.diff(remoteContents);
 
-        // THIS IS THE KEY TO MAKING UPDATES THAT WON'T OVERWRITE WORK IN PROGRESS
-        editor.updateContents(localChanges.transform(remoteChanges, 0));
-      }
-    } else {
-      editor.setHTML(doc[tmpl.data.field]);
+    // No "diff" means that this user made the last save, and there's nothing to update
+    if(diff.ops.length > 0) {
+      // THIS IS THE KEY TO MAKING UPDATES THAT WON'T OVERWRITE WORK IN PROGRESS
+      editor.updateContents(localChanges.transform(remoteChanges, 0));
     }
+
     // Save our server update as a reference point for future changes
     editor.oldDelta = oldContents.compose(remoteChanges);
     // var cursor = doc[fieldCursor];
@@ -94,7 +83,7 @@ Template.quill.onRendered(function() {
   //     setObj = {};
   //     setObj[fieldCursor] = {}
   //     setObj[fieldCursor][authorId] = range.end;
-  //     window[tmpl.data.collection].update({_id: tmpl.data.docId}, {$set: setObj})
+  //     tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
   //   }
   // });
 
@@ -110,7 +99,7 @@ Template.quill.onRendered(function() {
       setObj[tmpl.data.field] = newHTML;
       // setObj[fieldCursor] = {}
       // setObj[fieldCursor][authorId] = delta.length();
-      window[tmpl.data.collection].update({_id: tmpl.data.docId}, {$set: setObj})
+      tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
     }
   });
   */
@@ -128,6 +117,6 @@ Template.quill.events({
     setObj[tmpl.data.field] = newHTML;
     // setObj[fieldCursor] = {}
     // setObj[fieldCursor][authorId] = delta.length();
-    window[tmpl.data.collection].update({_id: tmpl.data.docId}, {$set: setObj})
+    tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
   }
 });
