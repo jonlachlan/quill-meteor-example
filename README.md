@@ -12,4 +12,6 @@ For me, the key insight is client/quill.js line 65:
 ```
 editor.updateContents(localChanges.transform(remoteChanges, 0));
 ```
-This uses ottypes (which Quill is build on) to transform the positions of any edits that were made from the server based on what changes were made locally -- this way one set of edits doesn't overwrite another.
+This uses [ottypes](https://github.com/ottypes/rich-text) (which Quill is build on) to transform the positions of any edits that were made from the server based on what changes were made locally -- this way one set of edits doesn't overwrite another.
+
+(The objects "localChanges" and "remoteChanges" are both Deltas that are created using the `.diff` method from ottypes.)
