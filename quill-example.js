@@ -6,10 +6,14 @@ if (Meteor.isClient) {
 
   Template.quillExample.helpers({
     editorDataReady: function () {
-      return (Meteor.user()) // need at least a user id. If you are using routes
+      return true;
+      // return (Meteor.user()) // need at least a user id. If you are using routes
     },
     docId: function() {
-      return MyCollection.findOne({})._id
+      var doc = MyCollection.findOne({});
+      if(doc) {
+        return doc._id
+      }
     }
   });
 

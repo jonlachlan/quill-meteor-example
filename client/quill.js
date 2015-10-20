@@ -2,13 +2,13 @@
 Template.quill.onRendered(function() {
   var tmpl = this;
   var fullEditor;
-  var authorId = Meteor.user().username;
+  // var authorId = Meteor.user().username;
 
   tmpl.quillEditor = new Quill('#editor', {
     modules: {
       'authorship': {
-        authorId: authorId,
-        // button: "#author-button",
+        authorId: "anonymousUser", // should be authorId
+      //   // button: "#author-button",
         enabled: true
       },
       // 'multi-cursor': {
@@ -81,7 +81,7 @@ Template.quill.onRendered(function() {
 
 
   // Add basic editor's author
-  authorship.addAuthor(authorId, "lightBlue");
+  // authorship.addAuthor(authorId, "lightBlue");
 
 
   // Add a cursor to represent basic editor's cursor
