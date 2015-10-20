@@ -21,10 +21,10 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    if(MyCollection.find().fetch().length < 1) {
-      MyCollection.insert({
-        myField: "here is my text."
-      });
-    }
+    MyCollection.remove({});
+    MyCollection.insert({
+      myField: "here is my text.",
+      myFieldDelta: { ops: [ {insert: "here is my text. "}]}
+    });
   });
 }
