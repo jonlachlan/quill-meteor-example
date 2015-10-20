@@ -6,7 +6,7 @@ In my particular use-case, I wanted users to have the autonomy to click "Save" t
 
 The template in the example successfully applies changes from down the wire, while maintaining all unsaved edits for the user.
 
-If you want to have live edits (i.e., save as you type), then just uncomment the `on text-changes` code (ln 92).
+You can toggle live-editing in this example with the button. Try it out...I'm curious to know how well it works for you...
 
 For me, the key insight is client/quill.js line 65:
 ```

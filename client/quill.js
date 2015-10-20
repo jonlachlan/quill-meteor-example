@@ -104,10 +104,7 @@ Template.quill.onRendered(function() {
         }
       });
     } else {
-      tmpl.quillEditor.on('text-change', function(delta, source) {
-        // do nothing
-        return false;
-      })
+      tmpl.quillEditor.removeAllListeners("text-change");
     }
   });
 });
@@ -134,5 +131,8 @@ Template.quill.events({
 
     // This update assumes that we already have the latest contents in our editor
     tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
+  },
+  'click #toggle-live-editing': function(e, tmpl) {
+    Session.set("liveEditing", !Session.get("liveEditing"));
   }
 });
