@@ -1,7 +1,6 @@
 <template name="quill">
   <div id="toolbar" class="toolbar ql-toolbar ql-snow">
     <span class="ql-format-group">
-      <span title="Save" class="ql-format-button ql-save">Save</span>
       <span class="ql-format-separator"></span>
       <span title="Bold" class="ql-format-button ql-bold"></span>
       <span class="ql-format-separator"></span>
@@ -16,23 +15,11 @@
       <span class="ql-format-separator"></span>
       <span title="Bullet" class="ql-format-button ql-bullet"></span>
       <span class="ql-format-separator"></span>
-      <span title="Text Alignment" class="ql-align ql-picker">
-        <span class="ql-picker-label" data-value="left"></span>
-        <span class="ql-picker-options">
-          <span data-value="left" class="ql-picker-item ql-selected"></span>
-          <span data-value="center" class="ql-picker-item"></span>
-          <span data-value="right" class="ql-picker-item"></span>
-          <span data-value="justify" class="ql-picker-item"></span>
-        </span>
-      </span>
-      <select title="Text Alignment" class="ql-align" style="display: none;">
-        <option value="left" label="Left" selected=""></option>
-        <option value="center" label="Center"></option>
-        <option value="right" label="Right"></option>
-        <option value="justify" label="Justify"></option>
-      </select>
-      </span>
-    </div>
+    </span>
+    <span class="ql-format-group">
+      <span title="Save" class="ql-format-button ql-save">Save</span>
+    </span>
+  </div>
 
   <div id="editor">
     <div contenteditable=true spellcheck=false></div>
