@@ -88,22 +88,36 @@ Template.quill.onRendered(function() {
   // });
 
   // If you want to save on every change, use the text-change event below. We're using a save button
-  /*
-  tmpl.quillEditor.on('text-change', function(delta, source) {
-    if (source === 'user') {
-      var newContents = tmpl.quillEditor.getContents();
-      var newHTML = tmpl.quillEditor.getHTML();
-      // newContents.updateContents(delta);
-      setObj = {};
-      setObj[fieldDelta] = newContents;
-      setObj[tmpl.data.field] = newHTML;
-      // setObj[fieldCursor] = {}
-      // setObj[fieldCursor][authorId] = delta.length();
-      tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
+  Tracker.autorun(function() {
+    if(Session.get("liveEditing")) {
+      tmpl.quillEditor.on('text-change', function(delta, source) {
+        if (source === 'user') {
+          var newContents = tmpl.quillEditor.getContents();
+          var newHTML = tmpl.quillEditor.getHTML();
+          // newContents.updateContents(delta);
+          setObj = {};
+          setObj[fieldDelta] = newContents;
+          setObj[tmpl.data.field] = newHTML;
+          // setObj[fieldCursor] = {}
+          // setObj[fieldCursor][authorId] = delta.length();
+          tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
+        }
+      });
+    } else {
+      tmpl.quillEditor.on('text-change', function(delta, source) {
+        // do nothing
+        return false;
+      })
     }
   });
-  */
 });
+
+Template.quill.helpers({
+  liveEditing: function() {
+    return Session.get("liveEditing");
+  }
+});
+
 
 Template.quill.events({
   'click .ql-save': function(e, tmpl) {
@@ -117,6 +131,8 @@ Template.quill.events({
     setObj[tmpl.data.field] = newHTML;
     // setObj[fieldCursor] = {}
     // setObj[fieldCursor][authorId] = delta.length();
+
+    // This update assumes that we already have the latest contents in our editor
     tmpl.data.collection.update({_id: tmpl.data.docId}, {$set: setObj})
   }
 });

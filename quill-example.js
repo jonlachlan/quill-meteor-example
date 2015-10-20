@@ -27,10 +27,12 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-    MyCollection.remove({});
-    MyCollection.insert({
-      myField: "here is my text.",
-      myFieldDelta: { ops: [ {insert: "here is my text. "}]}
-    });
+    setInterval(function() {
+      MyCollection.remove({});
+      MyCollection.insert({
+        myField: "here is my text.",
+        myFieldDelta: { ops: [ {insert: "here is my text. "}]},
+      });
+    }, 600000); // reset every 10 minutes
   });
 }
