@@ -6,13 +6,19 @@ if (Meteor.isClient) {
 
   Template.quillExample.helpers({
     editorDataReady: function () {
-      return true;
-      // return (Meteor.user()) // need at least a user id. If you are using routes
-    },
-    docId: function() {
       var doc = MyCollection.findOne({});
       if(doc) {
-        return doc._id
+        return true
+      }
+      // return (Meteor.user()) // need at least a user id. If you are using routes
+    },
+    editorHelper: function() {
+      return {
+        collection: MyCollection,
+        docId: function() {
+          return MyCollection.findOne({})._id;
+        },
+        field: "myField"
       }
     }
   });

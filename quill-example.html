@@ -11,6 +11,6 @@
 
 <template name="quillExample">
   {{#if editorDataReady}}
-    {{> quill collection="MyCollection" docId=docId field="myField"}}
+    {{> quill collection=editorHelper.collection docId=editorHelper.docId field=editorHelper.field}}
   {{/if}}
 </template>
