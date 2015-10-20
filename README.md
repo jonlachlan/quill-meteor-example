@@ -1,6 +1,6 @@
 This is an example of live-text editing using Quill on Meteor.
 
-See this example live: [quill-reactive-ot.meteor.com](quill-reactive-ot.meteor.com)
+See this example live: [http://quill-reactive-ot.meteor.com](http://quill-reactive-ot.meteor.com)
 
 In my particular use-case, I wanted users to have the autonomy to click "Save" to apply their changes, rather than live-editing. And since multiple people might be editing a document at the same time, I didn't want new edits to overwrite another user's work in progress.
 
