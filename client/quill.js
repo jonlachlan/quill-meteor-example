@@ -33,7 +33,9 @@ Template.quill.onRendered(function() {
   Tracker.autorun(function() {
     var editor = tmpl.quillEditor;
     var doc = tmpl.data.collection.findOne({_id:tmpl.data.docId});
-
+    if(!doc) {
+      return;
+    }
     if(!doc[tmpl.data.field]) {
       var blankObj = {}
       blankObj[tmpl.data.field] = "";
