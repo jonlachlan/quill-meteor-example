@@ -14,7 +14,7 @@ if (Meteor.isClient) {
     },
     editorHelper: function() {
       return {
-        collection: MyCollection,
+        collection: "myCollection",
         docId: function() {
           return MyCollection.findOne({})._id;
         },

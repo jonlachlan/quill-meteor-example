@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 trever:quill
 accounts-ui
 accounts-password
+jonlachlan:quill-reactive
